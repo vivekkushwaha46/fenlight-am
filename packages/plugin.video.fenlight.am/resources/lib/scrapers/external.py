@@ -185,8 +185,8 @@ class source:
 				if self.external_cache_check: cached = function(hash_list, cached_hashes, self.data, self.active_debrid)
 				else: cached = hash_list
 			else: cached = function(hash_list, cached_hashes)
-			if not self.background: self.process_quality_count_final((i for i in results if i['hash'] in cached))
-			final_results.extend((dict(i, **{'cache_provider': provider if i['hash'] in cached else 'Uncached %s' % provider, 'debrid': provider}) for i in results))
+			if not self.background: self.process_quality_count_final([i for i in results if i['hash'] in cached])
+			final_results.extend([dict(i, **{'cache_provider': provider if i['hash'] in cached else 'Uncached %s' % provider, 'debrid': provider}) for i in results])
 		def _debrid_check_dialog():
 			self.progress_dialog.reset_is_cancelled()
 			start_time, timeout = time.time(), 20
