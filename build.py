@@ -24,11 +24,17 @@ def build_addon():
 		return
 
 	version = version_match.group(1)
-	print(f"Building {ADDON_ID} version {version}")
+	print(f"Building {ADDON_ID} version {version} (ROOT DEPLOYMENT)")
 
-	# Create Zip File
-	zip_path = os.path.join(PACKAGES_DIR, f"{ADDON_ID}-{version}.zip")
+	# Create Zip File at ROOT
+	zip_path = os.path.join(ROOT_DIR, f"{ADDON_ID}-{version}.zip")
 	print(f"Archiving addon to {zip_path}...")
+	
+	# Cleanup old zips at root
+	for item in os.listdir(ROOT_DIR):
+		if item.startswith(ADDON_ID) and item.endswith('.zip'):
+			os.remove(os.path.join(ROOT_DIR, item))
+
 	with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
 		for root, dirs, files in os.walk(ADDON_DIR):
 			for file in files:
@@ -39,76 +45,34 @@ def build_addon():
 				zipf.write(file_path, arcname)
 	print(f"Successfully Created: {zip_path}")
 
-	# Create addons.xml
+	# Create addons.xml at ROOT
 	print("Generating addons.xml...")
-	addons_xml = '<?xml version="1.0" encoding="UTF-8"?>\n<addons>\n'
-	addons_xml += addon_xml
-	addons_xml += '\n</addons>\n'
+	addons_xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<addons>\n'
+	addons_xml_content += addon_xml
+	addons_xml_content += '\n</addons>\n'
 
 	addons_xml_path = os.path.join(ROOT_DIR, 'addons.xml')
 	with open(addons_xml_path, 'w', encoding='utf-8') as f:
-		f.write(addons_xml)
+		f.write(addons_xml_content)
 	print(f"Successfully Created: {addons_xml_path}")
 
-	# Create addons.xml.md5
-	md5 = hashlib.md5(addons_xml.encode('utf-8')).hexdigest()
+	# Create addons.xml.md5 at ROOT
+	md5 = hashlib.md5(addons_xml_content.encode('utf-8')).hexdigest()
 	addons_xml_md5_path = os.path.join(ROOT_DIR, 'addons.xml.md5')
 	with open(addons_xml_md5_path, 'w', encoding='utf-8') as f:
 		f.write(md5)
 	print(f"Successfully Created: {addons_xml_md5_path}")
 
-	# Generate index.html for Kodi File Manager navigation
-	index_html_root = f"""<html>
-<body>
-<h1>FenLight AM Repo</h1>
-<hr/>
-<pre>
-<a href="../">../</a>
-<a href="addons.xml">addons.xml</a>
-<a href="addons.xml.md5">addons.xml.md5</a>
-<a href="{ADDON_ID}/">{ADDON_ID}/</a>
-</pre>
-</body>
-</html>"""
-	with open(os.path.join(ROOT_DIR, 'index.html'), 'w', encoding='utf-8') as f:
-		f.write(index_html_root)
-		
-	index_html_addon = f"""<html>
-<body>
-<h1>{ADDON_ID} package</h1>
-<hr/>
-<pre>
-<a href="../">../</a>
-<a href="{ADDON_ID}-{version}.zip">{ADDON_ID}-{version}.zip</a>
-<a href="addon.xml">addon.xml</a>
-<a href="icon.png">icon.png</a>
-<a href="fanart.jpg">fanart.jpg</a>
-</pre>
-</body>
-</html>"""
-	with open(os.path.join(ROOT_DIR, ADDON_ID, 'index.html'), 'w', encoding='utf-8') as f:
-		f.write(index_html_addon)
+	# Cleanup index.html and repo folder
+	if os.path.exists(os.path.join(ROOT_DIR, 'index.html')):
+		os.remove(os.path.join(ROOT_DIR, 'index.html'))
+	if os.path.exists(os.path.join(ROOT_DIR, 'repo')):
+		shutil.rmtree(os.path.join(ROOT_DIR, 'repo'))
 
-    # Generate root index.html to override README.md rendering on GitHub Pages
-	root_index_html = f"""<html>
-<head><title>FenLight AM Repository</title></head>
-<body>
-<h1>FenLight AM Repository</h1>
-<hr/>
-<pre>
-<a href="repo/{ADDON_ID}/{ADDON_ID}-{version}.zip">{ADDON_ID}-{version}.zip</a>
-<a href="repo/addons.xml">addons.xml</a>
-<a href="repo/addons.xml.md5">addons.xml.md5</a>
-</pre>
-</body>
-</html>"""
-	with open(os.path.join(ROOT_DIR, 'index.html'), 'w', encoding='utf-8') as f:
-		f.write(root_index_html)
-        
-	print("\nBuild complete! GitHub deploy commands:")
+	print("\nBuild complete (Root Mode)! GitHub deploy commands:")
 	print("------------------------------------------")
 	print("git add .")
-	print(f'git commit -m "Optimize FenLight to version {version} for Android TV"')
+	print(f'git commit -m "Optimize FenLight AM to version {version} (Root Deployment)"')
 	print("git push origin main")
 	print("------------------------------------------")
 
