@@ -2,7 +2,7 @@
 
 # Configuration
 REPO_DIR="repo"
-ADDON_ID="plugin.video.fenlight"
+ADDON_ID="plugin.video.fenlight.am"
 ADDON_SRC="packages/${ADDON_ID}"
 ADDON_XML="${ADDON_SRC}/addon.xml"
 
@@ -72,6 +72,38 @@ else
     # Linux
     md5sum "$ADDONS_XML" | awk '{print $1}' > "${ADDONS_XML}.md5"
 fi
+
+echo "Generating directory indexing (index.html) for Kodi File Manager..."
+cat <<EOF > "${REPO_DIR}/index.html"
+<html>
+<body>
+<h1>FenLight AM Repo</h1>
+<hr/>
+<pre>
+<a href="../">../</a>
+<a href="addons.xml">addons.xml</a>
+<a href="addons.xml.md5">addons.xml.md5</a>
+<a href="${ADDON_ID}/">${ADDON_ID}/</a>
+</pre>
+</body>
+</html>
+EOF
+
+cat <<EOF > "${REPO_DIR}/${ADDON_ID}/index.html"
+<html>
+<body>
+<h1>${ADDON_ID} package</h1>
+<hr/>
+<pre>
+<a href="../">../</a>
+<a href="${ZIP_NAME}">${ZIP_NAME}</a>
+<a href="addon.xml">addon.xml</a>
+<a href="icon.png">icon.png</a>
+<a href="fanart.jpg">fanart.jpg</a>
+</pre>
+</body>
+</html>
+EOF
 
 echo "============================================="
 echo "Build Complete!"

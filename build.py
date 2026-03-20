@@ -6,7 +6,7 @@ import shutil
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 PACKAGES_DIR = os.path.join(ROOT_DIR, 'packages')
-ADDON_ID = 'plugin.video.fenlight'
+ADDON_ID = 'plugin.video.fenlight.am'
 ADDON_DIR = os.path.join(PACKAGES_DIR, ADDON_ID)
 
 def build_addon():
@@ -56,6 +56,39 @@ def build_addon():
 	with open(addons_xml_md5_path, 'w', encoding='utf-8') as f:
 		f.write(md5)
 	print(f"Successfully Created: {addons_xml_md5_path}")
+
+	# Generate index.html for Kodi File Manager navigation
+	index_html_root = f"""<html>
+<body>
+<h1>FenLight AM Repo</h1>
+<hr/>
+<pre>
+<a href="../">../</a>
+<a href="addons.xml">addons.xml</a>
+<a href="addons.xml.md5">addons.xml.md5</a>
+<a href="{ADDON_ID}/">{ADDON_ID}/</a>
+</pre>
+</body>
+</html>"""
+	with open(os.path.join(ROOT_DIR, 'index.html'), 'w', encoding='utf-8') as f:
+		f.write(index_html_root)
+		
+	index_html_addon = f"""<html>
+<body>
+<h1>{ADDON_ID} package</h1>
+<hr/>
+<pre>
+<a href="../">../</a>
+<a href="{ADDON_ID}-{version}.zip">{ADDON_ID}-{version}.zip</a>
+<a href="addon.xml">addon.xml</a>
+<a href="icon.png">icon.png</a>
+<a href="fanart.jpg">fanart.jpg</a>
+</pre>
+</body>
+</html>"""
+	with open(os.path.join(ROOT_DIR, ADDON_ID, 'index.html'), 'w', encoding='utf-8') as f:
+		f.write(index_html_addon)
+		
 	print("\nBuild complete! GitHub deploy commands:")
 	print("------------------------------------------")
 	print("git add .")

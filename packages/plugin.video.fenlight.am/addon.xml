@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addons>
 <addon id="plugin.video.fenlight.am" name="FenLight AM" provider-name="AnonyMouse" version="2.1.91">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
@@ -24,4 +22,4 @@
         </assets>
         <news>INFO: For latest changes see Changelog within Tools of add-on.</news>
     </extension>
-</addon></addons>
+</addon>
