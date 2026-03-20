@@ -90,17 +90,16 @@ def build_addon():
 		f.write(index_html_addon)
 
     # Generate root index.html to override README.md rendering on GitHub Pages
-	root_index_html = """<html>
+	root_index_html = f"""<html>
 <head><title>FenLight AM Repository</title></head>
 <body>
 <h1>FenLight AM Repository</h1>
 <hr/>
 <pre>
-<a href="repo/">repo/</a>
-<a href="README.md">README.md</a>
+<a href="repo/{ADDON_ID}/{ADDON_ID}-{version}.zip">{ADDON_ID}-{version}.zip</a>
+<a href="repo/addons.xml">addons.xml</a>
+<a href="repo/addons.xml.md5">addons.xml.md5</a>
 </pre>
-<hr/>
-<p>To use this in Kodi: Add <strong>https://vivekkushwaha46.github.io/fenlight-am/repo/</strong> as a source.</p>
 </body>
 </html>"""
 	with open(os.path.join(ROOT_DIR, 'index.html'), 'w', encoding='utf-8') as f:

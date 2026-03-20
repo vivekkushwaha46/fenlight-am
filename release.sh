@@ -113,11 +113,10 @@ cat <<EOF > "index.html"
 <h1>FenLight AM Repository</h1>
 <hr/>
 <pre>
-<a href="repo/">repo/</a>
-<a href="README.md">README.md</a>
+<a href="${ZIP_PATH}">${ZIP_NAME}</a>
+<a href="repo/addons.xml">addons.xml</a>
+<a href="repo/addons.xml.md5">addons.xml.md5</a>
 </pre>
-<hr/>
-<p>To use this in Kodi: Add <strong>https://vivekkushwaha46.github.io/fenlight-am/repo/</strong> as a source.</p>
 </body>
 </html>
 EOF
