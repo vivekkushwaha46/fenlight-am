@@ -105,6 +105,23 @@ cat <<EOF > "${REPO_DIR}/${ADDON_ID}/index.html"
 </html>
 EOF
 
+echo "Generating root directory indexing (index.html)..."
+cat <<EOF > "index.html"
+<html>
+<head><title>FenLight AM Repository</title></head>
+<body>
+<h1>FenLight AM Repository</h1>
+<hr/>
+<pre>
+<a href="repo/">repo/</a>
+<a href="README.md">README.md</a>
+</pre>
+<hr/>
+<p>To use this in Kodi: Add <strong>https://vivekkushwaha46.github.io/fenlight-am/repo/</strong> as a source.</p>
+</body>
+</html>
+EOF
+
 echo "============================================="
 echo "Build Complete!"
 echo "Zip: $ZIP_PATH"
