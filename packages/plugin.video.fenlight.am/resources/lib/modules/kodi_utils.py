@@ -424,8 +424,7 @@ def notification(line1, time=5000, icon=None):
 	kodi_dialog().notification('Fen Light', line1, icon or addon_icon(), time)
 
 def player_check(mode, params):
-	from modules.settings import playback_key
-	if mode == 'playback.%s' % playback_key():
+	if mode.startswith('playback.') and mode != 'playback.video':
 		from modules.sources import Sources
 		Sources().playback_prep(params)
 	elif mode == 'playback.video':
@@ -434,10 +433,6 @@ def player_check(mode, params):
 	else: ok_dialog('External Playback Detected', 'Playback through external addons is not supported')
 
 def external_playback_check(params):
-	from modules.settings import playback_key
-	if not playback_key() in params:
-		ok_dialog('External Playback Detected', 'Playback through external addons is not supported')
-		return False
 	return True
 
 def timeIt(func):
