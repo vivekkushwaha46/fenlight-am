@@ -280,7 +280,11 @@ def run_addon(addon='plugin.video.fenlight.am', block=False):
 	return execute_builtin('RunAddon(%s)' % addon, block)
 
 def external():
-	return 'fenlight' not in get_infolabel('Container.PluginName')
+	plugin_name = get_infolabel('Container.PluginName')
+	if 'fenlight' in plugin_name: return False
+	if not plugin_name and 'plugin.video.fenlight' in unquote(get_infolabel('Container.FolderPath')): return False
+	if not plugin_name: return False
+	return True
 
 def home():
 	return xbmcgui.getCurrentWindowId() == 10000
