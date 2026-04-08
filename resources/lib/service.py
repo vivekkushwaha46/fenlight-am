@@ -233,10 +233,10 @@ class FenLightMonitor(Monitor):
 		SyncSettings().run()
 		OnUpdateChanges().run()
 		AddonXMLCheck().run()
-		Thread(target=CustomFonts().run).start()
-		Thread(target=TraktMonitor().run).start()
-		Thread(target=UpdateCheck().run).start()
-		Thread(target=WidgetRefresher().run).start()
+		Thread(target=CustomFonts().run, daemon=True).start()
+		Thread(target=TraktMonitor().run, daemon=True).start()
+		Thread(target=UpdateCheck().run, daemon=True).start()
+		Thread(target=WidgetRefresher().run, daemon=True).start()
 		AutoStart().run()
 
 	def onNotification(self, sender, method, data):
