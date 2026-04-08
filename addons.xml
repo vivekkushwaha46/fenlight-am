@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <addons>
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.fenlight.am" name="FenLight AM" provider-name="AnonyMouse" version="10.1.0">
+<addon id="plugin.video.fenlight.am" name="FenLight AM" provider-name="AnonyMouse" version="10.2.0">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.pil" version="1.1.7"/>
@@ -20,8 +20,8 @@
 		<disclaimer lang="en">The author of this addon does not host any of the content which is found and has no affiliation with any of the content providers.</disclaimer>
         <license/>
         <assets>
-            <icon>resources/media/addon_icons/fenlight_icon_01.png</icon>
-            <fanart>resources/media/fenlight_fanart_01.jpg</fanart>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
         </assets>
         <news>INFO: For latest changes see Changelog within Tools of add-on.</news>
     </extension>
