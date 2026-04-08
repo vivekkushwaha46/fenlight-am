@@ -37,7 +37,11 @@ def get_changes(online_version=None):
 		return kodi_utils.notification('Error', icon=kodi_utils.get_icon('downloads'))
 
 def version_check(current_version, online_version):
-	return string_alphanum_to_num(current_version) != string_alphanum_to_num(online_version)
+	try:
+		current_parts = tuple(int(x) for x in current_version.strip().split('.'))
+		online_parts = tuple(int(x) for x in online_version.strip().split('.'))
+		return online_parts > current_parts
+	except: return False
 
 def update_check(action=4):
 	if action == 3: return
