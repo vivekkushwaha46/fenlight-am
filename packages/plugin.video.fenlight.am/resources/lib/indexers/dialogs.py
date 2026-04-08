@@ -111,7 +111,8 @@ def addon_icon_choice(params):
 	large_image_folder = os.path.join(kodi_utils.addon_path(), 'resources', 'media', 'addon_icons')
 	small_image_folder = os.path.join(large_image_folder, 'minis')
 	for item in [(large_image_folder, large_image_url), (small_image_folder, small_image_url)]:
-		urllib.request.urlretrieve(item[1] % new_name, kodi_utils.translate_path(os.path.join(item[0], new_name)))
+		try: urllib.request.urlretrieve(item[1] % new_name, kodi_utils.translate_path(os.path.join(item[0], new_name)))
+		except Exception: pass
 	new_icon_path = 'resources/media/addon_icons/%s' % new_name
 	addon_xml = kodi_utils.translate_path('special://home/addons/plugin.video.fenlight.am/addon.xml')
 	root = mdParse(addon_xml)

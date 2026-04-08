@@ -62,6 +62,12 @@ class OnUpdateChanges:
 		for item in ('window_theme', 'window_theme_name', 'window_theme_contrast', 'window_theme_highlight', 'window_theme_opacity', 'window_theme_opacity_name'):
 			restore_setting_default({'setting_id': item, 'silent': 'true'})
 
+	def fix_update_location_01(self):
+		# Fix wrong update.location cached from old versions (was set to github.io domain instead of repo name)
+		current = get_setting('update.location', '')
+		if current != 'fenlight-am':
+			set_setting('update.location', 'fenlight-am')
+
 class CustomFonts:
 	def run(self):
 		kodi_utils.logger('Fen Light', 'CustomFonts Service Starting')
