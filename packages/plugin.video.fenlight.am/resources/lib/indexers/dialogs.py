@@ -90,8 +90,10 @@ def addon_icon_choice(params):
 	import shutil
 	import urllib.request
 	from xml.dom.minidom import parse as mdParse
-	large_image_url = 'https://raw.githubusercontent.com/FenlightAnonyMouse/FenlightAnonyMouse.github.io/main/packages/addon_icons/%s'
-	small_image_url = large_image_url % '/minis/%s'
+	username = get_setting('update.username')
+	location = get_setting('update.location')
+	large_image_url = 'https://raw.githubusercontent.com/%s/%s/main/packages/addon_icons/%%s' % (username, location)
+	small_image_url = 'https://raw.githubusercontent.com/%s/%s/main/packages/addon_icons/minis/%%s' % (username, location)
 	set_icon = params.get('set_icon')
 	if set_icon: new_name = set_icon
 	else:

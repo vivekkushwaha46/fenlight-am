@@ -425,6 +425,14 @@ def tmdb_tv_search(query, page_no):
 	url = 'https://api.themoviedb.org/3/search/tv?api_key=%s&language=en-US&include_adult=%s&query=%s&page=%s' % (api_key, meta_filter, query, page_no)
 	return lists_cache_object(get_data, string, url)
 
+def tmdb_anime_search(query, page_no):
+	api_key = tmdb_api_key()
+	if api_key in (None, 'empty_setting', ''): return no_api_key()
+	meta_filter = get_meta_filter()
+	string = 'tmdb_anime_search_%s_%s_%s' % (query, meta_filter, page_no)
+	url = 'https://api.themoviedb.org/3/search/tv?api_key=%s&language=en-US&include_adult=%s&with_keywords=210024&query=%s&page=%s' % (api_key, meta_filter, query, page_no)
+	return lists_cache_object(get_data, string, url)
+
 def tmdb_tv_reviews(tmdb_id, page_no):
 	api_key = tmdb_api_key()
 	if api_key in (None, 'empty_setting', ''): return no_api_key()
